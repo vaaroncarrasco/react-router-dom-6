@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navbar } from "./components/Navbar"
+import { AboutPage } from "./pages/AboutPage"
+import { Dashboard } from "./pages/Dashboard"
+import { HomePage } from "./pages/HomePage"
+import { NotFoundPage } from "./pages/NotFoundPage"
+import { UserPage } from "./pages/UserPage"
+import { UsersPage } from "./pages/UsersPage"
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <BrowserRouter>
 
-export default App;
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={ <HomePage /> } />
+        <Route path="/about" element={ <AboutPage /> } />
+
+        <Route path="/usuarios" element={ <Navigate to='/users' /> } />
+        <Route path="/users" element={ <UsersPage /> } />
+        <Route path="/users/:id" element={ <UserPage /> } />
+
+        <Route path="/dashboard/*" element={ <Dashboard /> }>
+          <Route path="welcome" element={ <p>Welcome</p> } />
+          <Route path="bye" element={ <p>Bye</p> } />
+        </Route>
+
+        <Route path="*" element={ <NotFoundPage /> } />
+      </Routes>
+
+    </BrowserRouter>
+  )
+}
